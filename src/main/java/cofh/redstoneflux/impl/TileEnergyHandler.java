@@ -1,5 +1,11 @@
-package cofh.api.energy;
+/*
+ * (C) 2014-2017 Team CoFH / CoFH / Cult of the Full Hub
+ * http://www.teamcofh.com
+ */
+package cofh.redstoneflux.impl;
 
+import cofh.redstoneflux.api.IEnergyProvider;
+import cofh.redstoneflux.api.IEnergyReceiver;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;

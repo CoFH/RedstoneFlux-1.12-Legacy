@@ -1,4 +1,10 @@
-package cofh.api.energy;
+/*
+ * (C) 2014-2017 Team CoFH / CoFH / Cult of the Full Hub
+ * http://www.teamcofh.com
+ */
+package cofh.redstoneflux.api;
+
+import cofh.redstoneflux.impl.EnergyStorage;
 
 /**
  * An energy storage is the unit of interaction with Energy inventories.<br>

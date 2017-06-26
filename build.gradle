@@ -1,0 +1,139 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'maven'
+
+group = "cofh"
+archivesBaseName = "RedstoneFlux"
+
+targetCompatibility = "1.8"
+sourceCompatibility = "1.8"
+
+// Define properties file
+ext.configFile = file "build.properties"
+
+configFile.withReader {
+    // Load config.  It shall from now be referenced as simply config or project.config
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+version = "${project.config.mod_version}." + (System.getenv("BUILD_NUMBER") ?: "1")
+
+println config.mc_version + "-" + config.forge_version
+
+minecraft {
+    version = config.mc_version + "-" + config.forge_version
+    mappings = config.mappings
+    runDir = "run"
+    makeObfSourceJar = false
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mc_version", project.config.mc_version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version': project.version, 'mc_version': project.config.mc_version
+    }
+    rename '(.+_at.cfg)', 'META-INF/$1'
+}
+
+version = "${project.minecraft.version}-${project.version}"
+
+jar {
+    classifier = 'universal'
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+
+task srcJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+task signJar(type: SignJar, dependsOn: reobfJar) {
+    onlyIf { // Skip the task if our secret data isn't available
+        project.hasProperty('cofhKeyStore')
+    }
+
+    if (project.hasProperty('cofhKeyStore')) {
+        keyStore = project.cofhKeyStore // This needs to be a path to the keystore file
+        alias = project.cofhStoreAlias
+        storePass = project.cofhStorePass
+        keyPass = project.cofhStorePass
+        inputFile = jar.archivePath
+        outputFile = jar.archivePath
+    }
+}
+
+build.dependsOn signJar
+
+artifacts {
+    archives deobfJar
+    archives srcJar
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            if (project.hasProperty("local_maven") || project.hasProperty("maven_pass")) {
+                if (project.hasProperty("maven_pass")) {
+                    println "Uploading to remote maven."
+                    repository(url: "http://maven_upload.covers1624.net/") {
+                        authentication(userName: "cofh", password: project.getProperty("maven_pass"))
+                    }
+                } else {
+                    println "Uploading to local maven."
+                    repository(url: "file://${local_maven}")
+                }
+                pom {
+                    groupId = project.group
+                    // Force the maven upload to use the <mcversion>-<version> syntax preferred at files
+                    artifactId = project.archivesBaseName
+                    project {
+                        name project.archivesBaseName
+                        packaging 'jar'
+                        description 'RedstoneFlux'
+                        url 'https://github.com/CoFH/RedstoneFlux'
+
+                        scm {
+                            url 'https://github.com/CoFH/RedstoneFlux'
+                            connection 'scm:git:git://github.com/CoFH/RedstoneFlux.git'
+                            developerConnection 'scm:git:git@github.com:CoFH/RedstoneFlux.git'
+                        }
+
+                        issueManagement {
+                            system 'github'
+                            url 'https://github.com/CoFH/Feedback/issues'
+                        }
+
+                        developers {
+                            developer {
+                                id 'TeamCoFH'
+                                name 'TeamCoFH'
+                                roles { role 'developer' }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

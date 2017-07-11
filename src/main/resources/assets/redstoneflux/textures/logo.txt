@@ -1,5 +1,0 @@
-Logo to come in the future.
-
-We wanted to get this out ASAP to assist development in 1.12. :)
-
--King Lemming

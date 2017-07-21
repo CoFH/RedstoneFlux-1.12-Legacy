@@ -9,6 +9,8 @@ Frankly, there's not a great single reason, except that interfaces are more perf
 
 Or, maybe you just want pure RF and you don't want all the various new <Whatever> Flux variants to power your stuff. That's 100% fine too. :)
 
+All rights reserved.
+
 ©2012-2017 Cult of the Full Hub / Team CoFH / CoFH
 
 #### Homepage

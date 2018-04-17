@@ -16,6 +16,8 @@ import net.minecraft.nbt.NBTTagCompound;
  */
 public class ItemEnergyContainer extends Item implements IEnergyContainerItem {
 
+	public static final String ENERGY = "Energy";
+
 	protected int capacity;
 	protected int maxReceive;
 	protected int maxExtract;
@@ -73,12 +75,12 @@ public class ItemEnergyContainer extends Item implements IEnergyContainerItem {
 		if (!container.hasTagCompound()) {
 			container.setTagCompound(new NBTTagCompound());
 		}
-		int stored = Math.min(container.getTagCompound().getInteger("Energy"), getMaxEnergyStored(container));
+		int stored = Math.min(container.getTagCompound().getInteger(ENERGY), getMaxEnergyStored(container));
 		int energyReceived = Math.min(capacity - stored, Math.min(this.maxReceive, maxReceive));
 
 		if (!simulate) {
 			stored += energyReceived;
-			container.getTagCompound().setInteger("Energy", stored);
+			container.getTagCompound().setInteger(ENERGY, stored);
 		}
 		return energyReceived;
 	}
@@ -86,15 +88,15 @@ public class ItemEnergyContainer extends Item implements IEnergyContainerItem {
 	@Override
 	public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
 
-		if (container.getTagCompound() == null || !container.getTagCompound().hasKey("Energy")) {
+		if (container.getTagCompound() == null || !container.getTagCompound().hasKey(ENERGY)) {
 			return 0;
 		}
-		int stored = Math.min(container.getTagCompound().getInteger("Energy"), getMaxEnergyStored(container));
+		int stored = Math.min(container.getTagCompound().getInteger(ENERGY), getMaxEnergyStored(container));
 		int energyExtracted = Math.min(stored, Math.min(this.maxExtract, maxExtract));
 
 		if (!simulate) {
 			stored -= energyExtracted;
-			container.getTagCompound().setInteger("Energy", stored);
+			container.getTagCompound().setInteger(ENERGY, stored);
 		}
 		return energyExtracted;
 	}
@@ -102,10 +104,10 @@ public class ItemEnergyContainer extends Item implements IEnergyContainerItem {
 	@Override
 	public int getEnergyStored(ItemStack container) {
 
-		if (container.getTagCompound() == null || !container.getTagCompound().hasKey("Energy")) {
+		if (container.getTagCompound() == null || !container.getTagCompound().hasKey(ENERGY)) {
 			return 0;
 		}
-		return Math.min(container.getTagCompound().getInteger("Energy"), getMaxEnergyStored(container));
+		return Math.min(container.getTagCompound().getInteger(ENERGY), getMaxEnergyStored(container));
 	}
 
 	@Override

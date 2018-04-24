@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod (modid = RedstoneFlux.MOD_ID, name = RedstoneFlux.MOD_NAME, version = RedstoneFlux.VERSION, certificateFingerprint = "d4f1503fbacd9b9fb767720420c5395104239ec9")
+@Mod (modid = RedstoneFlux.MOD_ID, name = RedstoneFlux.MOD_NAME, version = RedstoneFlux.VERSION, certificateFingerprint = "8a6abf2cb9e141b866580d369ba6548732eff25f")
 public class RedstoneFlux {
 
 	public static final String MOD_ID = "redstoneflux";

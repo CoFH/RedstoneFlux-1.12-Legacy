@@ -11,7 +11,7 @@ Or, maybe you just want pure RF and you don't want all the various new <Whatever
 
 All rights reserved.
 
-©2012-2017 Cult of the Full Hub / Team CoFH / CoFH
+©2012-2018 Cult of the Full Hub / Team CoFH / CoFH
 
 #### Homepage
 

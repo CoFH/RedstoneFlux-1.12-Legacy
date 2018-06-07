@@ -97,7 +97,7 @@ artifacts {
 }
 
 def pullVersion() {
-	def file = file("src/main/java/cofh/redstoneflux/RedstoneFlux.java")
+	def file = file("src/main/java/cofh/redstoneflux/RedstoneFluxProps.java")
 	def version = ""
 	def pattern = Pattern.compile("^\tpublic static final String VERSION = \"([\\d\\.]*)\";\$")
 	file.eachLine { String s ->

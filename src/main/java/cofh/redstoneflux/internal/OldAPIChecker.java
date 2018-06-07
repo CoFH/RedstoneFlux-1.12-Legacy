@@ -1,10 +1,10 @@
 /*
- * (C) 2014-2017 Team CoFH / CoFH / Cult of the Full Hub
+ * (C) 2014-2018 Team CoFH / CoFH / Cult of the Full Hub
  * http://www.teamcofh.com
  */
 package cofh.redstoneflux.internal;
 
-import cofh.redstoneflux.RedstoneFlux;
+import cofh.redstoneflux.RedstoneFluxProps;
 import com.google.common.collect.ImmutableSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class OldAPIChecker {
 
-	private static final Logger LOGGER = LogManager.getLogger(RedstoneFlux.MOD_NAME);
+	private static final Logger LOGGER = LogManager.getLogger(RedstoneFluxProps.MOD_NAME);
 	private static final Set<String> oldAPIClasses;
 
 	static {

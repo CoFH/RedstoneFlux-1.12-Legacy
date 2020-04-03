@@ -37,8 +37,8 @@ public class OldAPIChecker {
 
 	public static void check() {
 
-		boolean ignoreOldAPI = Boolean.parseBoolean(System.getProperty("cofh.rf.ignoreOldAPI", "false"));
-		boolean crashOnOldAPI = Boolean.parseBoolean(System.getProperty("cofh.rf.crashOnOldAPI", "true"));
+		boolean ignoreOldAPI = false;//Boolean.parseBoolean(System.getProperty("cofh.rf.ignoreOldAPI", "false"));
+		boolean crashOnOldAPI = true;//Boolean.parseBoolean(System.getProperty("cofh.rf.crashOnOldAPI", "true"));
 
 		if (!ignoreOldAPI) {
 			Set<String> repackedAPIClasses = new HashSet<>();
@@ -56,10 +56,11 @@ public class OldAPIChecker {
 					builder.append("\n");
 				}
 				builder.append("\n");
-				if (crashOnOldAPI) {
-					builder.append("To prevent this crash, add \"-Dcofh.rf.crashOnOldAPI=false\" to your command line arguments.");
-					builder.append("\n");
-				}
+				// Let's not support this anymore, eh?
+				//				if (crashOnOldAPI) {
+				//					builder.append("To prevent this crash, add \"-Dcofh.rf.crashOnOldAPI=false\" to your command line arguments.");
+				//					builder.append("\n");
+				//				}
 				if (crashOnOldAPI) {
 					throw new RuntimeException(builder.toString());
 				} else {
